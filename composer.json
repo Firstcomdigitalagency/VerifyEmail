@@ -1,0 +1,14 @@
+{
+    "name": "firstcom/verify-email",
+    "description": "email checking",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Firstcom Digital",
+            "email": "firstcomdigital@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
