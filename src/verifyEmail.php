@@ -1,7 +1,5 @@
 <?php
 
-namespace VerifyEmail;
-
 /**
  * Class to check up e-mail
  *
