@@ -1,12 +1,14 @@
 <?php
 
+namespace VerifyEmail;
+
 /**
  * Class to check up e-mail
  *
  * @author Konstantin Granin <kostya@granin.me>
  * @copyright Copyright (c) 2015, Konstantin Granin
  */
-class verifyEmail {
+class VerifyEmail {
 
   protected $stream = false;
 
