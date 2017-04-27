@@ -99,7 +99,7 @@ class VerifyEmail {
       $this->set_error('Invalid address : ' . $email);
       $this->edebug($this->ErrorInfo);
       if ($this->exceptions) {
-        throw new verifyEmailException($this->ErrorInfo);
+        throw new VerifyEmailException($this->ErrorInfo);
       }
     }
     $this->from = $email;
@@ -236,16 +236,9 @@ class VerifyEmail {
    * @return boolean True if the valid email also exist
    */
   public function check($email) {
-    $result = FALSE;
-
-    if (!self::validate($email)) {
-      $this->set_error("{$email} incorrect e-mail");
-      $this->edebug($this->ErrorInfo);
-      if ($this->exceptions) {
-        throw new verifyEmailException($this->ErrorInfo);
-      }
-      return FALSE;
-    }
+    $result = json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
+    
+    // self::validate($email)
     $this->error_count = 0; // Reset errors
     $this->stream = FALSE;
 
@@ -262,9 +255,9 @@ class VerifyEmail {
           $this->set_error("Problem initializing the socket");
           $this->edebug($this->ErrorInfo);
           if ($this->exceptions) {
-            throw new verifyEmailException($this->ErrorInfo);
+            throw new VerifyEmailException($this->ErrorInfo);
           }
-          return FALSE;
+          return json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
         } else {
           $this->edebug($host . ":" . $errstr);
         }
@@ -286,9 +279,9 @@ class VerifyEmail {
       $this->set_error("All connection fails");
       $this->edebug($this->ErrorInfo);
       if ($this->exceptions) {
-        throw new verifyEmailException($this->ErrorInfo);
+        throw new VerifyEmailException($this->ErrorInfo);
       }
-      return FALSE;
+      return json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
     }
 
     $this->_streamQuery("HELO " . self::parse_email($this->from));
@@ -311,7 +304,7 @@ class VerifyEmail {
          * 250 Requested mail action okay, completed
          * email address was accepted
          */
-        return TRUE;
+        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "TRUE"}');
       case '450':
       case '451':
       case '452':
@@ -325,9 +318,9 @@ class VerifyEmail {
          * 452 Requested action not taken: insufficient system storage
          * email address was greylisted (or some temporary error occured on the MTA)
          */
-        return FALSE;
+        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "FALSE"}');
       default:
-        return FALSE;
+        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "FALSE"}');
     }
   }
 
@@ -385,7 +378,7 @@ class VerifyEmail {
 /**
  * verifyEmail exception handler
  */
-class verifyEmailException extends Exception {
+class VerifyEmailException extends Exception {
 
   /**
    * Prettify error message output
