@@ -1,2 +1,2 @@
-# verifyEmail
+# VerifyEmail
 Email checking
