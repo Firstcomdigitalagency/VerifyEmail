@@ -236,9 +236,8 @@ class VerifyEmail {
    * @return boolean True if the valid email also exist
    */
   public function check($email) {
-    $result = json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
-    
-    // self::validate($email)
+    $result = json_decode('{"smtp_code": "NULL", "smtp_status": "FALSE"}');
+
     $this->error_count = 0; // Reset errors
     $this->stream = FALSE;
 
@@ -257,7 +256,7 @@ class VerifyEmail {
           if ($this->exceptions) {
             throw new VerifyEmailException($this->ErrorInfo);
           }
-          return json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
+          return json_decode('{"smtp_code": "NULL", "smtp_status": "FALSE"}');
         } else {
           $this->edebug($host . ":" . $errstr);
         }
@@ -281,7 +280,7 @@ class VerifyEmail {
       if ($this->exceptions) {
         throw new VerifyEmailException($this->ErrorInfo);
       }
-      return json_decode('{"smpt_code": "NULL", "smpt_status": "FALSE"}');
+      return json_decode('{"smtp_code": "NULL", "smtp_status": "FALSE", "sm"}');
     }
 
     $this->_streamQuery("HELO " . self::parse_email($this->from));
@@ -304,7 +303,7 @@ class VerifyEmail {
          * 250 Requested mail action okay, completed
          * email address was accepted
          */
-        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "TRUE"}');
+        return json_decode('{"smtp_code": ' . $code . ', "smtp_status": "TRUE"}');
       case '450':
       case '451':
       case '452':
@@ -318,9 +317,9 @@ class VerifyEmail {
          * 452 Requested action not taken: insufficient system storage
          * email address was greylisted (or some temporary error occured on the MTA)
          */
-        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "FALSE"}');
+        return json_decode('{"smtp_code": ' . $code . ', "smtp_status": "FALSE"}');
       default:
-        return json_decode('{"smpt_code": ' . $code . ', "smpt_status": "FALSE"}');
+        return json_decode('{"smtp_code": ' . $code . ', "smtp_status": "FALSE"}');
     }
   }
 
