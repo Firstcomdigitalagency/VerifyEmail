@@ -280,7 +280,7 @@ class VerifyEmail {
       if ($this->exceptions) {
         throw new VerifyEmailException($this->ErrorInfo);
       }
-      return json_decode('{"smtp_code": "NULL", "smtp_status": "FALSE", "sm"}');
+      return json_decode('{"smtp_code": "NULL", "smtp_status": "FALSE"}');
     }
 
     $this->_streamQuery("HELO " . self::parse_email($this->from));
